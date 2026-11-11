@@ -1,0 +1,15 @@
+{
+  "ticket_id": "25aa4dbf-993a-47f3-840a-f478ba1f5c79",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "MASTER_CORE_V1/staging/visualizer_v1.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/visualizer_v1.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": true,
+  "current_sha256": "ede7e2d1f4b90df5805d0bb7bf5919dccdedb047c824d38947f9e2ad82db9066",
+  "proposed_sha256": "55bfd5d09e29de0dfb2a366f489c1cd6dc7ab83f9992a4e8e6c47650539e64a7",
+  "proposed_content": "",
+  "created_at": 1794385473.577599,
+  "expires_at": 1794386073.577599
+}

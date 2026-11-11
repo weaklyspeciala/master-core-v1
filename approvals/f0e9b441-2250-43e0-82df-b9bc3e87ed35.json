@@ -1,0 +1,13 @@
+{
+  "ticket_id": "f0e9b441-2250-43e0-82df-b9bc3e87ed35",
+  "created_at": 1794315706.8620403,
+  "expires_at": 1794316306.8620403,
+  "relative_path": "MASTER_CORE_V1_STEP6_INTEGRATION_SANDBOX/api_write_existing.txt",
+  "current_sha256": "61ed5549c2e166eef89430342c9b3dbeb6e42f0667d58d81b5f7a26329a0a07c",
+  "proposed_sha256": "11ed0cf540dad7b19555c9dc9493986d1c4ca72143f7a47912285f87b274a289",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794315706.9489145,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\api_write_existing.txt.20261110_183146.f0e9b441.bak",
+  "final_sha256": "11ed0cf540dad7b19555c9dc9493986d1c4ca72143f7a47912285f87b274a289"
+}

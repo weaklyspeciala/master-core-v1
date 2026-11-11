@@ -1,0 +1,17 @@
+{
+  "ticket_id": "89e4251a-ac85-4950-a6ca-2e0de26ad4fc",
+  "ticket_kind": "agent_project_edit",
+  "status": "applied",
+  "relative_path": "MASTER_CORE_V1/staging/test_registry.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/test_registry.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": false,
+  "current_sha256": null,
+  "proposed_sha256": "1cbe7f17911886e0c64ccd82ef8bc129683a6bb6e79b3ca4bdc3e88aee96c96d",
+  "proposed_content": "",
+  "created_at": 1794383156.732344,
+  "expires_at": 1794383756.732344,
+  "backup": null,
+  "applied_sha256": "1cbe7f17911886e0c64ccd82ef8bc129683a6bb6e79b3ca4bdc3e88aee96c96d"
+}

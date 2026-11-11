@@ -1,0 +1,15 @@
+{
+  "ticket_id": "41798e4d-5a9a-4d7b-987d-d87e5a9d7ddd",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "hero.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "hero.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": false,
+  "current_sha256": null,
+  "proposed_sha256": "6721c2648e98bd1929118b32a5671a160e79a404385549296035a9484a1171da",
+  "proposed_content": "",
+  "created_at": 1794384779.3042858,
+  "expires_at": 1794385379.3042858
+}

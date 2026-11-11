@@ -1,0 +1,15 @@
+{
+  "ticket_id": "291fcba0-48f4-4098-bfdd-dc87647dfdee",
+  "ticket_kind": "agent_project_edit",
+  "status": "expired",
+  "relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_expired.txt",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_expired.txt",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_existed": true,
+  "current_sha256": "4fb19d7f8ab57ef82ba2d1582f100d2f08b3704526d17c389ce6db50c289d597",
+  "proposed_sha256": "b0e491a400661fd8434fc14c9b0d0662c95161aa8c78b3bb259f42d569811ffd",
+  "proposed_content": "",
+  "created_at": 1794320099.2135482,
+  "expires_at": 1794320098.2195506
+}

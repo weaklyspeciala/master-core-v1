@@ -1,0 +1,13 @@
+{
+  "ticket_id": "f20b2140-1aa5-43a0-9c04-0ce17fbb9a87",
+  "created_at": 1794314602.5917263,
+  "expires_at": 1794315202.5917263,
+  "relative_path": "MASTER_CORE_V1_STEP5_ROLLBACK_SANDBOX/protect_concurrent_change.txt",
+  "current_sha256": "5abb66026da82d747d3d8b76f82378c7315fb75f5317e798d3765c75973cfd34",
+  "proposed_sha256": "3a22096d91b0d09e07f32735f177d5e7d03ff0f46b64671470c29145dce4c47c",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794314602.6739352,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\protect_concurrent_change.txt.20261110_181322.f20b2140.bak",
+  "final_sha256": "3a22096d91b0d09e07f32735f177d5e7d03ff0f46b64671470c29145dce4c47c"
+}

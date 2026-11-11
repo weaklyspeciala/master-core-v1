@@ -1,0 +1,10 @@
+{
+  "ticket_id": "3b53851c-61f4-472c-8512-7505b51be800",
+  "created_at": 1794311832.159252,
+  "expires_at": 1794312432.159252,
+  "relative_path": "MASTER_CORE_V1_TEST_SANDBOX/runtime_test.txt",
+  "current_sha256": "02135f7e1457cd6d473563103cb4777ace58fc64fc85a7368b5006c4e80ddbbb",
+  "proposed_sha256": "51e2cb1a6f419d739a6e7cd0f49fa94b650face8e65a8c73987ba6b01d235eab",
+  "proposed_content": "",
+  "status": "rejected"
+}

@@ -1,0 +1,15 @@
+{
+  "ticket_id": "6aa62d6c-29fb-4ed7-8736-bc5222e3b752",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "MASTER_CORE_V1/staging/self_development_controller_v1.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/self_development_controller_v1.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": true,
+  "current_sha256": "6e533767be63f29fa6a5c0acfab98b08b51d97d91e735e954d98e01af6298e28",
+  "proposed_sha256": "141d95ae8a36120deab74e2d2cd610aabcb5f91c54467cf1c0820188307ac884",
+  "proposed_content": "",
+  "created_at": 1794380620.4075084,
+  "expires_at": 1794381220.4075084
+}

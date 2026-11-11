@@ -1,0 +1,17 @@
+{
+  "ticket_id": "8f63d702-51c1-4dcd-9b1f-79a16339cd8c",
+  "ticket_kind": "agent_project_edit",
+  "status": "rolled_back",
+  "relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_invalid.json",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_invalid.json",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_existed": true,
+  "current_sha256": "2b6f3ebb511325eb9ced845723acbd9c39a7cbaf0b08e7866b7b352a5ce8dddd",
+  "proposed_sha256": "cbdf3b1f91ae32fe1ea292ac6cccf19222f97929f531523f0d15d885052c00c4",
+  "proposed_content": "",
+  "created_at": 1794320098.62991,
+  "expires_at": 1794320698.62991,
+  "backup": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\agent_project_edits\\8f63d702-51c1-4dcd-9b1f-79a16339cd8c.agent_invalid.json.before.bak",
+  "validation_error": "Static validation failed: Expecting value: line 1 column 11 (char 10)"
+}

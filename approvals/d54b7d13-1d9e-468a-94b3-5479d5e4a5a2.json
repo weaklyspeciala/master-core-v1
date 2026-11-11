@@ -1,0 +1,15 @@
+{
+  "ticket_id": "d54b7d13-1d9e-468a-94b3-5479d5e4a5a2",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "script.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "script.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": false,
+  "current_sha256": null,
+  "proposed_sha256": "762000a5503bd9f644c24fb261a46f52860fc92a7fe3a4a473007be97e038805",
+  "proposed_content": "",
+  "created_at": 1794385339.3116403,
+  "expires_at": 1794385939.3116403
+}

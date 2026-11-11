@@ -1,0 +1,17 @@
+{
+  "ticket_id": "28514e76-02fe-45e6-985b-5c4c45da6dc4",
+  "ticket_kind": "agent_project_edit",
+  "status": "applied",
+  "relative_path": "MASTER_CORE_V1/staging/hello_ai.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/hello_ai.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": false,
+  "current_sha256": null,
+  "proposed_sha256": "f7ac299ebdc5dd663dabe592acac3f48e607501163b629ebfa1cedbd6b766e06",
+  "proposed_content": "",
+  "created_at": 1794381657.5825126,
+  "expires_at": 1794382257.5825126,
+  "backup": null,
+  "applied_sha256": "f7ac299ebdc5dd663dabe592acac3f48e607501163b629ebfa1cedbd6b766e06"
+}

@@ -1,0 +1,17 @@
+{
+  "ticket_id": "bd84a3c6-fe08-4921-a365-45f2f7afee23",
+  "ticket_kind": "agent_project_edit",
+  "status": "applied",
+  "relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_success.txt",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_success.txt",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_existed": true,
+  "current_sha256": "b85f6cac056c286cb58b5e5cb3e022ac4ee8ba2d4e8f6ec436701e3d02fcc579",
+  "proposed_sha256": "c8ee96a70a19b414cbc772eb32cfdc1588be54e232e47b13e0c353a11423fe6d",
+  "proposed_content": "",
+  "created_at": 1794320098.4644756,
+  "expires_at": 1794320698.4644756,
+  "backup": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\agent_project_edits\\bd84a3c6-fe08-4921-a365-45f2f7afee23.agent_success.txt.before.bak",
+  "applied_sha256": "c8ee96a70a19b414cbc772eb32cfdc1588be54e232e47b13e0c353a11423fe6d"
+}

@@ -1,0 +1,464 @@
+# Phase 3 Step 9 - Animation Pipeline Read-Only Audit
+
+- Generated: 2026-11-10 20:07:45 +05:30
+- Mode: Read-only static inspection; project code was not executed.
+- Source mutation: none intended; each scanned file was re-hashed after inspection.
+- Files inspected: 85
+- Files unchanged during audit: 85
+- Files changed during audit: 0
+- Static findings: 211 (HIGH=17, MEDIUM=194)
+- Skipped entries (excluded folders / oversized files): 9
+- Read errors: 0
+
+## Scanned project roots
+- BANANA_V5_ENGINE: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V5_ENGINE`
+- BANANA_V53_RAVI_RIG_PILOT: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT`
+- BANANA_STUDIO_V5: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_STUDIO_V5`
+- DIRECTOR_TO_AUTOPILOT_ADAPTER_V1: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1`
+- BANANA_CINEMATIC_COMPOSER_V2: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2`
+- BANANA_CINEMATIC_COMPOSER_V3: `H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3`
+- STICKMAN_AUTOPILOT_REPOSITORY: `H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV`
+
+## Missing expected roots
+- BANANA_RIG_ANIMATION_V4 :: H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_RIG_ANIMATION_V4
+
+## Findings by category
+- DESTRUCTIVE_DELETE: 17
+- FILE_WRITE_OR_OVERWRITE: 101
+- PROCESS_EXECUTION: 36
+- NETWORK_OR_REMOTE_IO: 57
+- DYNAMIC_CODE_EXECUTION: 0
+- PERMISSION_OR_SYSTEM_CHANGE: 0
+
+## Detailed findings
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_V5_ENGINE | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V5_ENGINE\install_v5_engine.ps1:17
+  - `Copy-Item -LiteralPath $source -Destination $target -Recurse`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_V5_ENGINE | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V5_ENGINE\install_v5_engine.ps1:26
+  - `Remove-Item -LiteralPath $target -Recurse -Force -ErrorAction SilentlyContinue`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\install_v53_ravi_pilot.ps1:50
+  - `Copy-Item -Path (Join-Path $partsSource '*') -Destination $partsTarget -Recurse`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\install_v53_ravi_pilot.ps1:51
+  - `Copy-Item -LiteralPath $rigSource -Destination $rigTarget`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\install_v53_ravi_pilot.ps1:53
+  - `Copy-Item -Path (Join-Path $previewSource '*') -Destination $previewTarget -Recurse`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\install_v53_ravi_pilot.ps1:70
+  - `Remove-Item -LiteralPath $item -Recurse -Force -ErrorAction SilentlyContinue`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\install_v53_ravi_pilot.ps1:76
+  - `Remove-Item Env:\BANANA_STUDIO_ROOT -ErrorAction SilentlyContinue`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_V53_RAVI_RIG_PILOT | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_V53_RAVI_RIG_PILOT\run_v53_ravi_tests.ps1:16
+  - `Remove-Item Env:\BANANA_STUDIO_ROOT -ErrorAction SilentlyContinue`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_STUDIO_V5 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_STUDIO_V5\scripts\v5\artwork\audit-v53-assets.mjs:52
+  - `fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n', 'utf8');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | DIRECTOR_TO_AUTOPILOT_ADAPTER_V1 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1\director_adapter_package\director-adapter.mjs:71
+  - `const baseName = path.basename(realSource, ext).replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 48) || 'asset';`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | DIRECTOR_TO_AUTOPILOT_ADAPTER_V1 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1\director_adapter_package\director-adapter.mjs:75
+  - `fs.copyFileSync(realSource, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | DIRECTOR_TO_AUTOPILOT_ADAPTER_V1 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1\director_adapter_package\director-adapter.mjs:200
+  - `fs.copyFileSync(audioPath, path.join(stage, ...narrationRelative.split('/')), fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | DIRECTOR_TO_AUTOPILOT_ADAPTER_V1 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1\director_adapter_package\director-adapter.mjs:296
+  - `fs.renameSync(stage, out);`
+- [HIGH] DESTRUCTIVE_DELETE | DIRECTOR_TO_AUTOPILOT_ADAPTER_V1 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\DIRECTOR_TO_AUTOPILOT_ADAPTER_V1\director_adapter_package\director-adapter.mjs:299
+  - `fs.rmSync(stage, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\compose-banana-cinematic-v2.mjs:54
+  - `fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\compose-banana-cinematic-v2.mjs:59
+  - `fs.writeFileSync(tmp, ${JSON.stringify(value, null, 2)}\n, {encoding: 'utf8', flag: 'wx'});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\compose-banana-cinematic-v2.mjs:60
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\compose-banana-cinematic-v2.mjs:306
+  - `fs.renameSync(staging, target);`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\compose-banana-cinematic-v2.mjs:324
+  - `fs.rmSync(staging, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\run_banana_cinematic_v2.ps1:19
+  - `throw "V2 output already exists; it will not be overwritten. Inspect or rename it first: $OutputDir"`
+- [MEDIUM] PROCESS_EXECUTION | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\run_banana_cinematic_v2.ps1:53
+  - `Start-Process $Preview`
+- [MEDIUM] PROCESS_EXECUTION | BANANA_CINEMATIC_COMPOSER_V2 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V2\BANANA_CINEMATIC_V2_PACKAGE\run_banana_cinematic_v2.ps1:54
+  - `if (Test-Path -LiteralPath $Contact) { Start-Process $Contact }`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:59
+  - `fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:64
+  - `fs.writeFileSync(tmp, ${JSON.stringify(value, null, 2)}\n, {encoding: 'utf8', flag: 'wx'});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:65
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:115
+  - `const clean = value => value.toLocaleLowerCase().replace(/[.!?,;:]+$/u, '');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:402
+  - `fs.copyFileSync(openPeelPath, peelDest, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:441
+  - `fs.renameSync(staging, target);`
+- [HIGH] DESTRUCTIVE_DELETE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\compose-banana-cinematic-v3.mjs:446
+  - `fs.rmSync(staging, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\install_banana_cinematic_v3.ps1:25
+  - `Copy-Item -LiteralPath $item.Destination -Destination (Join-Path $backupDir "$name.$stamp.bak") -Force`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | BANANA_CINEMATIC_COMPOSER_V3 | H:\MASTER_AI_WORKSTATION\MASTER_AI_WORKSTATION\BANANA_CINEMATIC_COMPOSER_V3\BANANA_CINEMATIC_COMPOSER_V3_PACKAGE\install_banana_cinematic_v3.ps1:27
+  - `Copy-Item -LiteralPath $item.Source -Destination $item.Destination -Force`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:18
+  - `subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i',`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:21
+  - `subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i',`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:31
+  - `config.write_text(json.dumps(cfg))`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:36
+  - `config.write_text(json.dumps(invalid))`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:45
+  - `config.write_text(json.dumps(invalid))`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-finishing.py:52
+  - `config.write_text(json.dumps(cfg))`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-guidance.py:35
+  - `"https://renoise.ai/mcp?utm_source=crazykaomei-aini-202610&utm_medium=xcom",`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-a6-guidance.py:40
+  - `"Do not repaint, mask, replace the mouth",`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-ab-preservation.py:44
+  - `content = content.replace(new, old, 1)`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:24
+  - `readable_cn = re.sub(r'<[^>]+>|\]\([^)]+\)|https?://[^\s<>)"]+', "", cn.replace("# 🎬 Stickman Video Director\n", "", 1))`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:26
+  - `readable_outside_faq = re.sub(r'<[^>]+>|\]\([^)]+\)|https?://[^\s<>)"]+', "", outside_faq.replace("# 🎬 Stickman Video Director\n", "", 1))`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:58
+  - `assert "https://github.com/kaomei/stickman-video-director" in install`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:78
+  - `assert "[X 上的可视化制作教程](https://x.com/CrazyKaomei/status/2102311241046008268)（含分步视频演示的串帖）" in director_start, "Keep the visual X walkthrough with step-by-step video demos in the Director instructions"`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:124
+  - `assert "Node.js" not in autopilot_start and "FFmpeg" not in autopilot_start`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:167
+  - `previews = sorted(set(re.findall(r'src="https://cdn\.jsdelivr\.net/gh/kaomei/stickman-video-director@[0-9a-f]{40}/(assets/readme/previews/[^" ]+\.gif)"', cn)))`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:201
+  - `assert re.search(r'<img src="https://cdn\.jsdelivr\.net/gh/kaomei/stickman-video-director@[0-9a-f]{40}/assets/readme/previews/b1-minimal-handdrawn-2026-10-23\.gif"[^>]+width="360">', b1), "Keep the immutable B1 preview route and match A's preview width"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:208
+  - `assert "https://github.com/leksautomate" in cn`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-chinese-onboarding.py:210
+  - `license_targets = {"LICENSE", "https://github.com/kaomei/stickman-video-director/blob/main/LICENSE"}`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-classic-character.sh:14
+  - `assert light == dark.replace('white line animation', 'black line animation').replace('figure stays white', 'figure stays black'), 'Theme swap must preserve the same anatomy and current-pose rule'`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-classic-character.sh:24
+  - `assert 'replace only "no face, no eyes, no mouth,"' in catalog, 'Expression choice must not change anatomy'`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:27
+  - `legacy = legacy.replace(revised_a5, original_a5, 1)`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:48
+  - `catalog_base = "https://github.com/kaomei/stickman-video-director/blob/main/README.zh-CN.md"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:64
+  - `assert url == f"https://github.com/kaomei/stickman-video-director/blob/main/{filename}", language`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:73
+  - `assert f"https://github.com/kaomei/stickman-video-director/blob/main/README.en.md#{catalog}" in public_links`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:76
+  - `assert "https://github.com/kaomei/stickman-video-director" in install`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-first-use-guidance.py:94
+  - `"not replace, shorten or globally rewrite", "fixed character anchor"):`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-historical-cartoon.py:14
+  - `"https://github.com/leksautomate", "/pull/41",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:31
+  - `assert "For your first video, follow the [visual production walkthrough on X](https://x.com/CrazyKaomei/status/2102311241046008268) (Thread with step-by-step video demos)." in source, "Approved first-video walkthrough copy and unchanged X thread link"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:44
+  - `pinned = "https://cdn.jsdelivr.net/gh/kaomei/stickman-video-director@"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:68
+  - `"https://github.com/kaomei/stickman-video-director",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:69
+  - `"https://telegram.me/CrazyKaomei",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:70
+  - `"https://github.com/kaomei/stickman-video-director/blob/main/LICENSE",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:71
+  - `"https://github.com/leksautomate",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:72
+  - `"https://x.com/CrazyKaomei/status/2102311241046008268",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:73
+  - `"https://x.com/CrazyKaomei",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:74
+  - `"https://flow.google.com/",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:112
+  - `tutorial = next(line for line in text.splitlines() if "https://x.com/CrazyKaomei/status/2102311241046008268" in line)`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:113
+  - `assert re.search(r"\[[^\]]*X[^\]]*\]\(https://x\.com/CrazyKaomei/status/2102311241046008268\)", tutorial), (name, "walkthrough explicitly identifies X in the link text")`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:132
+  - `assert "Telegram" in community and "**[@CrazyKaomei](https://telegram.me/CrazyKaomei)**" in community, (name, "Telegram contact")`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:134
+  - `assert "https://github.com/kaomei/stickman-video-director/issues" not in community, (name, "Do not require a GitHub Issue for feedback")`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-localized-readmes.py:135
+  - `assert re.search(r"^🔔 \*.*\*\*\[@CrazyKaomei\]\(https://x\.com/CrazyKaomei\)\*\*.*\*$", community, re.M), (name, "italic X follow line with bold profile link")`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-thumbnail-kit.py:46
+  - `"https://cdn.jsdelivr.net/gh/kaomei/stickman-video-director@"`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-voice-continuity.py:39
+  - `for mutation in ("Same narrator as clip 1.", male.replace("medium-low pitch", "high pitch")):`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\tests\verify-voice-continuity.py:65
+  - `old_examples = subprocess.check_output([`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:19
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:30
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:48
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-android-arm64/-/canvas-android-arm64-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:63
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:68
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-darwin-arm64/-/canvas-darwin-arm64-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:83
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:88
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-darwin-x64/-/canvas-darwin-x64-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:103
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:108
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm-gnueabihf/-/canvas-linux-arm-gnueabihf-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:123
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:128
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm64-gnu/-/canvas-linux-arm64-gnu-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:146
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:151
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm64-musl/-/canvas-linux-arm64-musl-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:169
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:174
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-riscv64-gnu/-/canvas-linux-riscv64-gnu-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:192
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:197
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-x64-gnu/-/canvas-linux-x64-gnu-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:215
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:220
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-x64-musl/-/canvas-linux-x64-musl-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:238
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:243
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-win32-arm64-msvc/-/canvas-win32-arm64-msvc-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:258
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:263
+  - `"resolved": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-0.1.100.tgz",`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\package-lock.json:278
+  - `"url": "https://github.com/sponsors/Brooooooklyn"`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:73
+  - `fs.writeFileSync(full, file === 'references/style-catalog.md' ? '# Catalog\n## 4. Style 4: Cozy\nCozy section\n## 5. Style 5: History\nHistory section' : Fixture reference: ${file}, 'utf8');`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:228
+  - `} finally { fs.rmSync(root, {recursive: true, force: true}); }`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:258
+  - `baseUrl: 'http://127.0.0.1:11434',`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:264
+  - `assert.ok(requests.every(item => item.url === 'http://127.0.0.1:11434/api/chat'));`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:281
+  - `} finally { fs.rmSync(root, {recursive: true, force: true}); }`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:306
+  - `} finally { fs.rmSync(root, {recursive: true, force: true}); }`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\director-brain.test.mjs:320
+  - `} finally { fs.rmSync(root, {recursive: true, force: true}); }`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:6
+  - `import {spawnSync} from 'node:child_process';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:8
+  - `import {ROOT, FFMPEG, run, save, loadProject, groupWords, hashFile, probe, designPlane} from '../scripts/autopilot-core.mjs';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:12
+  - `const command = args => spawnSync(process.execPath, [cli, ...args], {encoding: 'utf8', timeout: 120000});`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:16
+  - `t.after(() => fs.rmSync(dir, {recursive: true, force: true}));`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:17
+  - `run(FFMPEG, ['-v', 'error', '-f', 'lavfi', '-i', 'sine=frequency=310:duration=0.85', '-y', path.join(dir, 'voice.wav')]);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:55
+  - `const b2 = await render(loadProject(f.file),{replace:true});`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:73
+  - `f.project.voice.path = 'https://example.com/voice.wav'; save(f.file, f.project); assert.throws(() => loadProject(f.file), /local path/); f.project.voice.path = 'voice.wav';`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:79
+  - `const p = loadProject(f.file), first = await render(p), second = await render(p, {replace: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:109
+  - `fs.copyFileSync(path.join(ROOT, 'assets/b1/calendar-crayon.png'), path.join(f.dir, 'later.png'));`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:128
+  - `r = command(['preview', f.file, '--seconds', '0.4', '--replace']); assert.notEqual(r.status, 0); assert.match(r.stderr, /later\.png/);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:132
+  - `fs.copyFileSync(path.join(ROOT, 'assets/b1/calendar-crayon.png'), later);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:141
+  - `fs.copyFileSync(path.join(ROOT, 'assets/b1/idea-bulb-crayon.png'), later);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:147
+  - `r = command(['render', f.file, '--replace']); assert.equal(r.status, 0, r.stderr);`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:163
+  - `run(FFMPEG, ['-v', 'error', '-f', 'lavfi', '-i', 'sine=frequency=720:duration=0.85', '-y', path.join(f.dir, 'voice.wav')]);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:181
+  - `fs.writeFileSync(path.join(external, 'sentinel'), 'unchanged');`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:188
+  - `const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/gemini-media.mjs'), 'speech'], {encoding: 'utf8'}); assert.notEqual(r.status, 0); assert.match(r.stderr, /Network disabled/);`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:191
+  - `const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/gemini-media.mjs'), 'speech', '--direction', 'old-voice-direction.txt', '--allow-network'], {encoding: 'utf8', env: {...process.env, GEMINI_API_KEY: ''}});`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:196
+  - `t.after(() => fs.rmSync(dir, {recursive: true, force: true}));`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:198
+  - `fs.writeFileSync(file, text);`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:205
+  - `assert.equal(url, 'https://generativelanguage.googleapis.com/v1beta/models/offline-tts:generateContent');`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\tests\runtime.test.mjs:214
+  - `const r = spawnSync(process.execPath, ['--input-type=module', '--eval', runner], {encoding: 'utf8', env: {...process.env, GEMINI_API_KEY: 'offline-test-only-not-a-real-key'}, timeout: 10000});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:21
+  - `return re.findall(r"\w+(?:['’]\w+)*", text.upper().replace('’', "'"))`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:33
+  - `return json.loads(subprocess.check_output([`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:61
+  - `for tool in ('ffmpeg', 'ffprobe'):`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:166
+  - `proc = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', str(path), '-map', '0:a:0',`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:194
+  - `decoder = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', str(picture), '-an',`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:197
+  - `encoder = subprocess.Popen(['ffmpeg', '-v', 'warning', '-f', 'rawvideo', '-pix_fmt',`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:248
+  - `cmd = ['ffmpeg', '-v', 'warning', '-i', str(out / 'picture-captioned.mp4'),`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:251
+  - `subprocess.run(cmd + ['-movflags', '+faststart', str(final)], check=True, stderr=log)`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:252
+  - `subprocess.run(['ffmpeg', '-v', 'error', '-i', str(final), '-f', 'null', '-'], check=True)`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:253
+  - `(out / 'captions.srt').write_text('\n\n'.join(`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\a6_finish.py:277
+  - `(out / 'manifest.json').write_text(json.dumps(report, indent=2))`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:5
+  - `import {spawnSync} from 'node:child_process';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:8
+  - `export const FFMPEG = process.env.FFMPEG || 'ffmpeg';`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:16
+  - `fs.writeFileSync(tmp, JSON.stringify(value, null, 2) + '\n');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:17
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:20
+  - `const result = spawnSync(exe, args, {encoding: 'utf8', maxBuffer: 8 * 1024 * 1024});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:28
+  - `if (typeof file !== 'string' || !file || /^(?:[a-z]+:|\/\/)/i.test(file.replace(/^[A-Z]:[\\/]/i, ''))) throw new Error('Media must be a local path');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-core.mjs:141
+  - `function flush() { if (words.length) cues.push({start: start + lead, end: end + lead, text: words.join(' ').replace(/\s+([,.!?;:])/g, '$1')}); words = []; }`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:3
+  - `import {spawn} from 'node:child_process';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:6
+  - `import {ROOT, FFMPEG, sha, hashFile, save, probe, run, mediaPath, fontPaths, outputDir, designPlane, loadProject} from './autopilot-core.mjs';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:102
+  - `const child = spawn(FFMPEG, ['-v', 'error', '-y', '-f', 'rawvideo', '-pixel_format', 'rgba', '-video_size', ${p.width}x${p.height}, '-framerate', String(p.fps), '-i', 'pipe:0', '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '20', '-pix_fmt', 'yuv420p',...`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:133
+  - `samples.forEach((s, i) => bytes.writeInt16LE(Math.round(Math.max(-1, Math.min(1, s)) * 32767), 44 + i * 2)); fs.writeFileSync(file, bytes);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:138
+  - `export async function render(p, {full = false, seconds = 20, replace = false} = {}) {`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:147
+  - `const fd = fs.openSync(lock, 'wx'); fs.writeFileSync(fd, JSON.stringify({pid: process.pid})); fs.closeSync(fd);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:152
+  - `if (fs.existsSync(target) && !replace) {`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:154
+  - `throw new Error('Output exists with different/unverified contents; pass --replace to replace renderer-owned output');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:169
+  - `if (valid) reused++; else { done(rendering shot ${i + 1}/${p.shots.length}); const tmp = path.join(cache, ${key}.partial.mp4); await encode(p, frame, first, last - first, tmp); fs.renameSync(tmp, clip); }`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:173
+  - `const list = path.join(cache, 'concat.txt'); fs.writeFileSync(list, clips.map(f => file '${path.basename(f)}').join('\n') + '\n');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:181
+  - `run(FFMPEG, args); run(FFMPEG, ['-v', 'error', '-i', partial, '-f', 'null', '-']); fs.renameSync(partial, target);`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:181
+  - `run(FFMPEG, args); run(FFMPEG, ['-v', 'error', '-i', partial, '-f', 'null', '-']); fs.renameSync(partial, target);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:183
+  - `fs.writeFileSync(path.join(out, ${kind}.srt), cues.map((c, i) => ${i + 1}\n${stamp(c.start)} --> ${stamp(c.end)}\n${c.text}\n).join('\n'));`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:184
+  - `fs.writeFileSync(path.join(out, ${kind}.vtt), 'WEBVTT\n\n' + cues.map(c => ${stamp(c.start, true)} --> ${stamp(c.end, true)}\n${c.text}\n).join('\n'));`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot-render.mjs:187
+  - `fs.writeFileSync(path.join(out, ${kind}-contact-sheet.png), sheet.toBuffer('image/png'));`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot.mjs:4
+  - `import {ROOT, FFMPEG, FFPROBE, run, probe, loadProject, outputDir, save, json, hashFile, groupWords} from './autopilot-core.mjs';`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot.mjs:11
+  - `for (const [name, exe] of [['ffmpeg', FFMPEG], ['ffprobe', FFPROBE]]) try { run(exe, ['-version']); checks[name] = true; } catch { checks[name] = false; }`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot.mjs:60
+  - `const {render} = await import('./autopilot-render.mjs'); console.log(JSON.stringify(await render(p, {full: command === 'render', seconds, replace: args.includes('--replace')}), null, 2));`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\autopilot.mjs:61
+  - `} else throw new Error('Commands: doctor | probe FILE | init DIR | captions WORDS OUTPUT [--lead N] | validate PROJECT [--seconds N] | preview PROJECT [--seconds N] [--replace] | approve PROJECT --note TEXT | render PROJECT [--replace]');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v2.mjs:54
+  - `fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v2.mjs:59
+  - `fs.writeFileSync(tmp, ${JSON.stringify(value, null, 2)}\n, {encoding: 'utf8', flag: 'wx'});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v2.mjs:60
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v2.mjs:306
+  - `fs.renameSync(staging, target);`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v2.mjs:324
+  - `fs.rmSync(staging, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:59
+  - `fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:64
+  - `fs.writeFileSync(tmp, ${JSON.stringify(value, null, 2)}\n, {encoding: 'utf8', flag: 'wx'});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:65
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:115
+  - `const clean = value => value.toLocaleLowerCase().replace(/[.!?,;:]+$/u, '');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:402
+  - `fs.copyFileSync(openPeelPath, peelDest, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:441
+  - `fs.renameSync(staging, target);`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-cinematic-v3.mjs:446
+  - `fs.rmSync(staging, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:52
+  - `fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:57
+  - `fs.writeFileSync(tmp, ${JSON.stringify(value, null, 2)}\n, {encoding: 'utf8', flag: 'wx'});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:58
+  - `fs.renameSync(tmp, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:94
+  - `const clean = s => s.toLocaleLowerCase().replace(/[.!?,;:]+$/u, '');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:394
+  - `fs.copyFileSync(path.join(RIG_SOURCE,entry.name),path.join(rigDest,entry.name),fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:415
+  - `fs.renameSync(stage,target);`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\compose-banana-rig-v4.mjs:419
+  - `fs.rmSync(stage,{recursive:true,force:true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-adapter.mjs:71
+  - `const baseName = path.basename(realSource, ext).replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 48) || 'asset';`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-adapter.mjs:75
+  - `fs.copyFileSync(realSource, destination, fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-adapter.mjs:200
+  - `fs.copyFileSync(audioPath, path.join(stage, ...narrationRelative.split('/')), fs.constants.COPYFILE_EXCL);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-adapter.mjs:296
+  - `fs.renameSync(stage, out);`
+- [HIGH] DESTRUCTIVE_DELETE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-adapter.mjs:299
+  - `fs.rmSync(stage, {recursive: true, force: true});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:14
+  - `export const DEFAULT_OLLAMA_URL = (process.env.OLLAMA_HOST || 'http://127.0.0.1:11434').replace(/\/$/, '');`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:14
+  - `export const DEFAULT_OLLAMA_URL = (process.env.OLLAMA_HOST || 'http://127.0.0.1:11434').replace(/\/$/, '');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:104
+  - `let content = fs.readFileSync(full, 'utf8').replace(/\r\n/g, '\n');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:128
+  - `const system = You are a professional short-cartoon story director. Preserve the user's exact premise, key characters, important actions, and requested funny ending. Do not replace the story with a different idea.\n +`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:169
+  - `text = text.replace(/^(?:character\s*name|character|name|নাম|চরিত্র)\s*[:：]\s*/i, '').trim();`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:170
+  - `return text.replace(/^['"“”]+|['"“”]+$/g, '').trim();`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:181
+  - `const unlabeled = raw.replace(/^(?:character\s*name|character|name|নাম|চরিত্র)\s*[:：]\s*/i, '').trim();`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:312
+  - `const cleaned = content.trim().replace(/^(?:json)?\s*/i, '').replace(/\s*$/, '');`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:626
+  - `const heartbeat = setInterval(() => onProgress(${label} is still generating; please keep this PowerShell window open.), 15_000);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:670
+  - `const baseUrl = (options.baseUrl || DEFAULT_OLLAMA_URL).replace(/\/$/, '');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:763
+  - `return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'director-project';`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:769
+  - `fs.writeFileSync(temporary, JSON.stringify(data, null, 2) + '\n', 'utf8');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:770
+  - `fs.renameSync(temporary, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:776
+  - `fs.writeFileSync(temporary, content, 'utf8');`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\director-brain.mjs:777
+  - `fs.renameSync(temporary, file);`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\gemini-media.mjs:31
+  - `fs.writeFileSync(receipt, JSON.stringify(record, null, 2), {flag: 'wx'});`
+- [MEDIUM] NETWORK_OR_REMOTE_IO | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\gemini-media.mjs:33
+  - `const response = await fetch(https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent, {method: 'POST', headers: {'Content-Type': 'application/json', 'x-goog-api-key': key}, body: JSON.stringify({contents: [{role: 'user', parts}], gen...`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\gemini-media.mjs:43
+  - `fs.writeFileSync(output, bytes, {flag: 'wx'}); Object.assign(record, {status: 'complete', output, sha256: crypto.createHash('sha256').update(bytes).digest('hex')});`
+- [MEDIUM] FILE_WRITE_OR_OVERWRITE | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\skills\directing-stickman-videos\scripts\gemini-media.mjs:45
+  - `finally { fs.writeFileSync(receipt, JSON.stringify(record, null, 2)); }`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\scripts\optimize-readme-previews.sh:6
+  - `command -v ffmpeg >/dev/null || { printf 'ffmpeg is required.\n' >&2; exit 1; }`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\scripts\optimize-readme-previews.sh:10
+  - `ffmpeg -hide_banner -loglevel error -y \`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\scripts\optimize-readme-previews.sh:18
+  - `ffmpeg -hide_banner -loglevel error -y \`
+- [MEDIUM] PROCESS_EXECUTION | STICKMAN_AUTOPILOT_REPOSITORY | H:\LOCAL_CARTOON_STUDIO\stickman-video-director-AUTOPILOT-DEV\scripts\optimize-readme-previews.sh:24
+  - `ffmpeg -hide_banner -loglevel error -y \`
+
+## Source integrity check
+- PASS: all 85 inspected files retained the same SHA256 before and after the audit.
+
+## Interpretation notes
+- Findings are static pattern matches, not proof of a vulnerability or proof that a code path executes.
+- Comments, examples, bundled third-party code, and test fixtures can produce false positives.
+- Excluded folders include generated renders/assets, dependency caches, build outputs, backups, and version-control metadata.
+- No finding is automatically patched by this audit. Step 9 integration decisions must be made after reviewing the report.

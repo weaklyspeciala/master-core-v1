@@ -1,0 +1,17 @@
+{
+  "ticket_id": "31c50cc7-c4a9-4759-a258-c97244c666be",
+  "ticket_kind": "agent_project_edit",
+  "status": "applied",
+  "relative_path": "MASTER_CORE_V1/staging/auto_animator.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/auto_animator.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": true,
+  "current_sha256": "36da109abf23c457b65212f09c1e63a195a586d69b58838aac3e998044d5aee6",
+  "proposed_sha256": "7d97090688a894381050e7e7ae1dad42df7e90f780b997023b04a21b7131c177",
+  "proposed_content": "",
+  "created_at": 1794383689.8556097,
+  "expires_at": 1794384289.8556097,
+  "backup": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\agent_project_edits\\31c50cc7-c4a9-4759-a258-c97244c666be.auto_animator.py.before.bak",
+  "applied_sha256": "7d97090688a894381050e7e7ae1dad42df7e90f780b997023b04a21b7131c177"
+}

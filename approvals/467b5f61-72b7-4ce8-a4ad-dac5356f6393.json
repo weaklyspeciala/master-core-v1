@@ -1,0 +1,15 @@
+{
+  "ticket_id": "467b5f61-72b7-4ce8-a4ad-dac5356f6393",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_existing.txt",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX_V2/agent_existing.txt",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_existed": true,
+  "current_sha256": "68f3d6cf2172f69d0c1fe4ef0d4ea269ba1ad235fb3f448bb0d4782833d51005",
+  "proposed_sha256": "709d77b4d1deb9bcecb1bd5305a547a4196e473909c2902b70ee8bcd274b95f1",
+  "proposed_content": "",
+  "created_at": 1794320098.4489694,
+  "expires_at": 1794320698.4489694
+}

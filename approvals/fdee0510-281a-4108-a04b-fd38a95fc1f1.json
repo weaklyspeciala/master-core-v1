@@ -1,0 +1,10 @@
+{
+  "ticket_id": "fdee0510-281a-4108-a04b-fd38a95fc1f1",
+  "created_at": 1794315707.1127093,
+  "expires_at": 1794316307.1127093,
+  "relative_path": "MASTER_CORE_V1_STEP6_INTEGRATION_SANDBOX/hash_mismatch.txt",
+  "current_sha256": "308c2ef2fac37d5a812e9a32405c6dfcf7b0a07608143dddd45fa48cd4056833",
+  "proposed_sha256": "2e229bd58d89dbd5a1108be2481372468d1e6efcb214a674ef2356ac68bf0c63",
+  "proposed_content": "",
+  "status": "rejected"
+}

@@ -1,0 +1,15 @@
+{
+  "ticket_id": "3bd6dd1e-4a4e-4387-bebb-c9ce49d23370",
+  "ticket_kind": "agent_project_edit",
+  "status": "rejected",
+  "relative_path": "MASTER_CORE_V1/staging/anim_math.py",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_relative_path": "MASTER_CORE_V1/staging/anim_math.py",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION",
+  "target_existed": true,
+  "current_sha256": "02108357d465548395c2490a648b592ba51ce0a1b5b4dc05d125d82f18a5dc2b",
+  "proposed_sha256": "722170bb46574e5b34212a2f3a090b0823364b55544e0778fe5cf500fd50dbc5",
+  "proposed_content": "",
+  "created_at": 1794385368.1841016,
+  "expires_at": 1794385968.1841016
+}

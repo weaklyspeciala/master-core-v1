@@ -1,0 +1,13 @@
+{
+  "ticket_id": "d6fc696a-22c1-418d-9706-42adcbc51e00",
+  "created_at": 1794311832.1724453,
+  "expires_at": 1794312432.1724453,
+  "relative_path": "MASTER_CORE_V1_TEST_SANDBOX/runtime_test.txt",
+  "current_sha256": "117d6c799d47ec8ab7f8f72e9907c579b584d90689091716544663edd4e17e5c",
+  "proposed_sha256": "b484fcf0ce6114e86444bd58ecb33089bfc655872fd1b6079bd6eff7a6fce8b4",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794311832.235088,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\runtime_test.txt.20261110_172712.d6fc696a.bak",
+  "final_sha256": "b484fcf0ce6114e86444bd58ecb33089bfc655872fd1b6079bd6eff7a6fce8b4"
+}

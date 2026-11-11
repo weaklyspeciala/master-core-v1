@@ -1,0 +1,10 @@
+{
+  "ticket_id": "16fd5888-1f8f-434e-89c8-d8a98e01e50e",
+  "created_at": 1794317262.7526321,
+  "expires_at": 1794317862.7526324,
+  "relative_path": "workspace/MASTER_CORE_V1_STEP6_LIVE_HTTP_SANDBOX_V2/live_hash_guard.txt",
+  "current_sha256": "9e42b6185e96fe70421578ee860c1a14222616208458efdd2b801a4298a613bd",
+  "proposed_sha256": "858e9a6d08d00cdc11f45ce675fd5d1ace8f4be2657513fc83ccd943e7141e84",
+  "proposed_content": "",
+  "status": "rejected"
+}

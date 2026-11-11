@@ -1,0 +1,17 @@
+{
+  "ticket_id": "1fe45753-fe3a-4008-91e2-0041a8c1b9a8",
+  "ticket_kind": "agent_project_edit",
+  "status": "rolled_back",
+  "relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX/agent_new_invalid.json",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_relative_path": "MASTER_CORE_V1_STEP8_AGENT_SANDBOX/agent_new_invalid.json",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace",
+  "target_existed": false,
+  "current_sha256": null,
+  "proposed_sha256": "80216967918172c414065ee096341fad4d00bcb845dd1aec3488920a24fe3c16",
+  "proposed_content": "",
+  "created_at": 1794319711.3283184,
+  "expires_at": 1794320311.3283184,
+  "backup": null,
+  "validation_error": "Static validation failed: Expecting value: line 1 column 8 (char 7)"
+}

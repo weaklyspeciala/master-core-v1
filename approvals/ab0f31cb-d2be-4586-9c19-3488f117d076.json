@@ -1,0 +1,13 @@
+{
+  "ticket_id": "ab0f31cb-d2be-4586-9c19-3488f117d076",
+  "created_at": 1794314602.4900167,
+  "expires_at": 1794315202.4900167,
+  "relative_path": "MASTER_CORE_V1_STEP5_ROLLBACK_SANDBOX/keep_validated_edit.txt",
+  "current_sha256": "75c3d7422330f51f31c7ffd607dd574c397881377d3317260be08653eca04cc5",
+  "proposed_sha256": "5f2a6ac01d0a38409adf3e61ccf7326182d9b2c000a95bf5daae92f510dd87b8",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794314602.578191,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\keep_validated_edit.txt.20261110_181322.ab0f31cb.bak",
+  "final_sha256": "5f2a6ac01d0a38409adf3e61ccf7326182d9b2c000a95bf5daae92f510dd87b8"
+}

@@ -1,0 +1,13 @@
+{
+  "ticket_id": "583e7625-8578-4f04-a8af-756c36532780",
+  "created_at": 1794314602.6960814,
+  "expires_at": 1794315202.6960814,
+  "relative_path": "MASTER_CORE_V1_STEP5_ROLLBACK_SANDBOX/rollback_on_validator_exception.txt",
+  "current_sha256": "c0258a626b5bc33c7cb51dfd725809e815fab749e2ba4a44ce6d28c7c3374486",
+  "proposed_sha256": "0ac3657cb84a450c49d73dd9db61ecede7dd70c0dbe2af520e1b392b5a002aef",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794314602.7517903,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\rollback_on_validator_exception.txt.20261110_181322.583e7625.bak",
+  "final_sha256": "0ac3657cb84a450c49d73dd9db61ecede7dd70c0dbe2af520e1b392b5a002aef"
+}

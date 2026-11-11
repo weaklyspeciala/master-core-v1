@@ -1,0 +1,17 @@
+{
+  "ticket_id": "580734c5-2141-4e28-8729-e7b37503cd0f",
+  "ticket_kind": "agent_project_edit",
+  "status": "applied",
+  "relative_path": "hello.txt",
+  "target_root": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace\\MASTER_AI_AGENT_LIVE_VALIDATION_AREA",
+  "target_relative_path": "hello.txt",
+  "selected_project": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\workspace\\MASTER_AI_AGENT_LIVE_VALIDATION_AREA",
+  "target_existed": true,
+  "current_sha256": "589315d28f5e2f53fdee4943508275f5d091d188f5fd0dbc1ec064ba09fb2d37",
+  "proposed_sha256": "b335d011578b55b54cebdeff93c58103c40738e6e80092593185ae645e0d3f9f",
+  "proposed_content": "",
+  "created_at": 1794320249.7505264,
+  "expires_at": 1794320849.7505264,
+  "backup": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\agent_project_edits\\580734c5-2141-4e28-8729-e7b37503cd0f.hello.txt.before.bak",
+  "applied_sha256": "b335d011578b55b54cebdeff93c58103c40738e6e80092593185ae645e0d3f9f"
+}

@@ -1,0 +1,13 @@
+{
+  "ticket_id": "2b1fb975-9467-482c-ad59-da24c262357f",
+  "created_at": 1794315706.96314,
+  "expires_at": 1794316306.96314,
+  "relative_path": "MASTER_CORE_V1_STEP6_INTEGRATION_SANDBOX/invalid_json_rollback.json",
+  "current_sha256": "4f7dc09636a6333026de0c061e2570645c822a0e91a8501e3d6f2de38c63dd2a",
+  "proposed_sha256": "cbdf3b1f91ae32fe1ea292ac6cccf19222f97929f531523f0d15d885052c00c4",
+  "proposed_content": "",
+  "status": "applied",
+  "applied_at": 1794315707.0347073,
+  "backup_path": "H:\\MASTER_AI_WORKSTATION\\MASTER_AI_WORKSTATION\\MASTER_CORE_V1\\backups\\invalid_json_rollback.json.20261110_183146.2b1fb975.bak",
+  "final_sha256": "cbdf3b1f91ae32fe1ea292ac6cccf19222f97929f531523f0d15d885052c00c4"
+}

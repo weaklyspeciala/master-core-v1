@@ -1,0 +1,7 @@
+# Protect local secrets and temporary backups
+mobile_bridge_config.json
+backups/
+__pycache__/
+_staging_upgrade_test.py
+*.bak
+*.pyc

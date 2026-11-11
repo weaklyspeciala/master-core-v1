@@ -1,0 +1,10 @@
+{
+  "ticket_id": "c4555548-4738-4a73-873f-253e91aed94c",
+  "created_at": 1794315706.8555176,
+  "expires_at": 1794316306.8555176,
+  "relative_path": "MASTER_CORE_V1_STEP6_INTEGRATION_SANDBOX/tool_update_existing.txt",
+  "current_sha256": "b9c508a9a567e08b225eb92f4733f1f8a91a31eac2602400218dbec2c57ed431",
+  "proposed_sha256": "9a72b25cf09cc9ca6949a8066b0f3f5966b5559febe816b6d3dfcb580774bfdf",
+  "proposed_content": "",
+  "status": "rejected"
+}
