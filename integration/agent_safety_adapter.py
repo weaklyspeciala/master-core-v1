@@ -152,6 +152,57 @@ def _write_ticket(path: Path, ticket: dict) -> None:
     os.replace(temp, path)
 
 
+
+def _ensure_approved_parent(target: Path, trusted_root: Path) -> None:
+    """Create missing parent folders only after ticket approval."""
+    root = Path(trusted_root).resolve()
+    parent = Path(target).parent
+
+    if not _inside(parent.resolve(), root):
+        raise AgentSafetyError("Target parent is outside the trusted project root.")
+
+    missing = []
+    cursor = parent
+
+    while not cursor.exists():
+        missing.append(cursor)
+        next_cursor = cursor.parent
+        if next_cursor == cursor:
+            raise AgentSafetyError("Cannot locate an existing trusted parent.")
+        cursor = next_cursor
+
+    existing = cursor.resolve()
+    if not _inside(existing, root) or not existing.is_dir():
+        raise AgentSafetyError("Nearest existing parent is not inside the trusted root.")
+
+    created = []
+    try:
+        for directory in reversed(missing):
+            parent_resolved = directory.parent.resolve()
+            if not _inside(parent_resolved, root):
+                raise AgentSafetyError("Directory creation escaped the trusted root.")
+
+            try:
+                directory.mkdir()
+                created.append(directory)
+            except FileExistsError:
+                pass
+
+            if directory.is_symlink():
+                raise AgentSafetyError("Symlink directory creation is not permitted.")
+
+            resolved = directory.resolve()
+            if not _inside(resolved, root) or not directory.is_dir():
+                raise AgentSafetyError("Created directory failed trusted-root validation.")
+    except Exception:
+        for directory in reversed(created):
+            try:
+                directory.rmdir()
+            except OSError:
+                pass
+        raise
+
+
 def create_agent_ticket(
     target: Path,
     selected_project: Path,
@@ -170,8 +221,6 @@ def create_agent_ticket(
     configured = _configured_roots()
     trusted_root = _trusted_root_for(resolved_target, selected, configured)
 
-    if not resolved_target.parent.exists() or not resolved_target.parent.is_dir():
-        raise AgentSafetyError("Target parent directory must already exist; Agent approval will not create folders.")
     if resolved_target.suffix.lower() not in ALLOWED_EXTENSIONS:
         raise AgentSafetyError("File extension is not enabled for Agent editing.")
     if resolved_target.exists() and not resolved_target.is_file():
@@ -311,6 +360,47 @@ def _atomic_restore(target: Path, backup: Path, expected_current: str, expected_
                 pass
 
 
+def reject_agent_ticket(ticket_id: str, reason: str) -> dict:
+    """Reject a pending Agent project-edit ticket without changing its target."""
+    if not isinstance(reason, str):
+        raise AgentSafetyError("Rejection reason must be text.")
+
+    clean_reason = reason.strip()
+    if not clean_reason:
+        raise AgentSafetyError("A non-empty rejection reason is required.")
+    if len(clean_reason) > 2000:
+        raise AgentSafetyError("Rejection reason must be 2000 characters or fewer.")
+
+    with _LOCK:
+        ticket_path, ticket = _read_ticket(ticket_id)
+
+        if ticket.get("status") != "pending":
+            raise AgentSafetyError("Agent ticket is no longer pending.")
+
+        was_expired = time.time() > float(ticket.get("expires_at", 0))
+
+        ticket["status"] = "rejected"
+        ticket["rejected_at"] = time.time()
+        ticket["rejection_reason"] = clean_reason
+        ticket["was_expired_when_rejected"] = was_expired
+        ticket["proposed_content"] = ""
+
+        _write_ticket(ticket_path, ticket)
+        _audit("agent_approval_rejected", {
+            "ticket_id": ticket_id,
+            "path": ticket.get("relative_path"),
+            "reason": clean_reason,
+            "was_expired_when_rejected": was_expired,
+        })
+
+    return {
+        "ok": True,
+        "status": "rejected",
+        "ticket_id": ticket_id,
+        "was_expired_when_rejected": was_expired,
+    }
+
+
 def approve_agent_ticket(
     ticket_id: str,
     typed_confirmation: str,
@@ -362,8 +452,7 @@ def approve_agent_ticket(
             backup = None
             if target.exists():
                 raise AgentSafetyError("A file appeared at the new-file target after review; approval invalidated.")
-            if not target.parent.is_dir():
-                raise AgentSafetyError("Target parent directory no longer exists.")
+            _ensure_approved_parent(target, trusted_root)
 
         # Re-resolve and recheck immediately before replacement/creation.
         target_check, root_check = _resolve_ticket_target(ticket)
@@ -546,3 +635,41 @@ def install(namespace: dict) -> None:
     namespace["tool_write"] = approval_required_write
     namespace["_MASTER_AGENT_SAFETY_INSTALLED"] = True
     _audit("agent_safety_adapter_installed", {"agent_root": str(namespace.get("ROOT", ""))})
+
+
+def apply_policy_authorized_ticket(ticket_id: str, policy_reason: str) -> dict:
+    """Apply only a ticket admitted by integration.agent_autonomy_policy."""
+    from integration.agent_autonomy_policy import evaluate
+    with _LOCK:
+        _, ticket = _read_ticket(ticket_id)
+        if ticket.get("status") != "pending": raise AgentSafetyError("Ticket is not pending.")
+        allowed, reason = evaluate(ticket.get("relative_path", ""), ticket.get("proposed_content", ""))
+        if not allowed or reason != policy_reason: raise AgentSafetyError("Auto-approval policy rejected this ticket.")
+        _audit("agent_policy_auto_approval", {"ticket_id": ticket_id, "path": ticket.get("relative_path"), "policy_version": "1.0", "decision": "allow", "reason": reason})
+        return approve_agent_ticket(ticket_id, "APPROVE", ticket.get("current_sha256"), ticket.get("proposed_sha256"))
+
+
+def rollback_applied_agent_ticket(ticket_id: str, reason: str) -> dict:
+    """Rollback only if target still has the exact applied SHA256."""
+    with _LOCK:
+        ticket_path, ticket = _read_ticket(ticket_id)
+        if ticket.get("status") != "applied": raise AgentSafetyError("Ticket is not in applied state.")
+        target, _ = _resolve_ticket_target(ticket)
+        applied_hash = ticket.get("applied_sha256")
+        if not target.is_file() or not applied_hash or _sha_file(target) != applied_hash:
+            raise AgentSafetyError("Target changed after apply; refusing rollback.")
+        if ticket.get("target_existed"):
+            backup_value = ticket.get("backup")
+            backup_path = Path(backup_value).resolve() if backup_value else None
+            if not backup_path or not _inside(backup_path, BACKUP_ROOT) or not backup_path.is_file():
+                raise AgentSafetyError("Verified backup is missing or outside backup store.")
+            restored = _atomic_restore(target, backup_path, applied_hash, ticket.get("current_sha256"))
+        else:
+            target.unlink(); restored = None
+        ticket["status"] = "rolled_back"
+        ticket["rollback_reason"] = str(reason)[:2000]
+        ticket["proposed_content"] = ""
+        _write_ticket(ticket_path, ticket)
+        _audit("agent_postcheck_rollback_completed", {"ticket_id": ticket_id, "path": ticket.get("relative_path"), "reason": str(reason)[:2000], "restored_sha256": restored})
+        return {"ok": True, "status": "rolled_back", "ticket_id": ticket_id, "restored_sha256": restored}
+

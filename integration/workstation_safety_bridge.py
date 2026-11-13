@@ -129,6 +129,8 @@ def install(namespace: dict) -> None:
     core = root / "MASTER_CORE_V1"
     safety_dir = core / "safety"
     integration_dir = core / "integration"
+    if str(integration_dir) not in sys.path:
+        sys.path.insert(0, str(integration_dir))
     if not safety_dir.is_dir() or not integration_dir.is_dir():
         raise RuntimeError("MASTER_CORE_V1 safety/integration folders are missing.")
     sys.path.insert(0, str(safety_dir))
@@ -215,7 +217,27 @@ def install(namespace: dict) -> None:
             ticket = _ticket_record(sfo, ticket_id)
 
             if route == "/api/safety/reject":
-                result = sfo.reject_approval(ticket_id)
+                if ticket.get("ticket_kind") == "agent_project_edit":
+                    from integration.agent_safety_adapter import (
+                        reject_agent_ticket,
+                        AgentSafetyError,
+                    )
+                    reason = data.get("reason")
+                    if reason is None or (
+                        isinstance(reason, str) and not reason.strip()
+                    ):
+                        reason = (
+                            "Rejected by user through Safety Approval Center."
+                        )
+                    try:
+                        result = reject_agent_ticket(ticket_id, reason)
+                    except AgentSafetyError as exc:
+                        return _send(
+                            self, 409, {"ok": False, "error": str(exc)}
+                        )
+                else:
+                    result = sfo.reject_approval(ticket_id)
+
                 return _send(self, 200, result)
 
             expected_current = data.get("expected_current_sha256")
@@ -230,7 +252,7 @@ def install(namespace: dict) -> None:
                 return _send(self, 400, {"ok": False, "error": "Type exactly APPROVE to apply this ticket."})
 
             if ticket.get("ticket_kind") == "agent_project_edit":
-                from agent_safety_adapter_v2 import approve_agent_ticket, AgentSafetyError
+                from integration.agent_safety_adapter import approve_agent_ticket, AgentSafetyError
                 try:
                     result = approve_agent_ticket(
                         ticket_id,

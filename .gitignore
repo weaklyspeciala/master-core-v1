@@ -5,3 +5,15 @@ __pycache__/
 _staging_upgrade_test.py
 *.bak
 *.pyc
+
+# MASTER CORE local/private runtime data
+approvals/
+logs/
+knowledge_base.json
+.master_dev/
+.master_repair_backups/
+.master_self_upgrade_backups/
+repair_files/
+*.backup-*
+*.ui-backup-*
+*.mp3

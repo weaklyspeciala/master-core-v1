@@ -183,83 +183,457 @@ controller = SafeMobileController()
 # =====================================================================
 # MOBILE VOICE WEB CONSOLE (Works on Android Chrome via Wi-Fi / Tailscale)
 # =====================================================================
-MOBILE_HTML = """<!DOCTYPE html>
-<html>
+MOBILE_HTML = r"""
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MASTER CORE - Mobile Voice Console</title>
+<meta name="theme-color" content="#10131b">
+<title>MASTER CORE | Command Workspace</title>
 <style>
-  body { background:#0b0f19; color:#00ffcc; font-family:monospace; margin:0; padding:12px; }
-  .box { border:1px solid #00ffff; border-radius:8px; padding:12px; margin-bottom:12px; background:#111827; }
-  h2 { margin:0 0 8px 0; color:#ff00ff; font-size:16px; }
-  #output { white-space:pre-wrap; word-wrap:break-word; color:#e5e7eb; max-height:52vh; overflow-y:auto; font-size:13px; }
-  input, select, button { width:100%; padding:12px; margin-top:8px; border-radius:6px; border:1px solid #00ffff; background:#1f2937; color:#fff; font-size:15px; box-sizing:border-box; }
-  .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
-  .voice-btn { background:#db2777; border-color:#f472b6; font-weight:bold; }
-  .send-btn { background:#059669; border-color:#34d399; font-weight:bold; }
+:root {
+  color-scheme: dark;
+  --bg:#10131b;
+  --panel:#191e29;
+  --panel2:#202737;
+  --line:#30394b;
+  --text:#edf1fa;
+  --muted:#9aa7bc;
+  --accent:#78aaff;
+  --green:#65d6a0;
+  --red:#ff8585;
+  --yellow:#f1c879;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.5;
+}
+main {
+  width:min(100%,850px);
+  margin:auto;
+  padding:22px 16px 40px;
+}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
+}
+.brand { font-size:19px; font-weight:750; letter-spacing:.4px; }
+.sub { color:var(--muted); font-size:12px; }
+.status {
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:6px 11px;
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+}
+.status.running { color:var(--yellow); }
+.status.completed { color:var(--green); }
+.status.error { color:var(--red); }
+.panel {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:15px;
+}
+h1 { font-size:21px; margin:0 0 5px; }
+h2 { font-size:15px; margin:0 0 12px; }
+.muted { color:var(--muted); font-size:13px; }
+textarea, input {
+  display:block;
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#111722;
+  color:var(--text);
+  padding:13px;
+  font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;
+  outline:none;
+}
+textarea:focus, input:focus {
+  border-color:var(--accent);
+}
+#cmd {
+  min-height:190px;
+  max-height:55vh;
+  resize:vertical;
+  overflow:auto;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+#pin { margin-top:10px; }
+.row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:12px;
+}
+button {
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel2);
+  color:var(--text);
+  padding:11px 15px;
+  font-weight:650;
+  font-size:13px;
+  cursor:pointer;
+}
+button:disabled { opacity:.45; cursor:not-allowed; }
+.primary {
+  background:#315f9e;
+  border-color:#477fc5;
+}
+.danger { color:#ffb0a9; }
+#review { display:none; }
+.review-text {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  max-height:45vh;
+  overflow:auto;
+  padding:13px;
+  background:#111722;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font:13px/1.6 ui-monospace,monospace;
+}
+#output {
+  white-space:normal;
+  overflow-wrap:anywhere;
+  font-size:14px;
+}
+#output pre {
+  margin:12px 0;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#0c111a;
+  overflow-x:auto;
+  white-space:pre;
+  font:13px/1.6 ui-monospace,monospace;
+}
+#output code { font-family:ui-monospace,monospace; }
+#output p { margin:9px 0; }
+#output h1,#output h2,#output h3 { margin:15px 0 7px; }
+#output ul { padding-left:22px; }
+details summary {
+  cursor:pointer;
+  color:var(--accent);
+  font-weight:650;
+}
+.tools {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin-top:14px;
+}
+.tools button { width:100%; }
+@media(max-width:430px) {
+  main { padding:16px 12px 30px; }
+  .panel { padding:13px; }
+  .tools { grid-template-columns:1fr 1fr; }
+}
 </style>
 </head>
 <body>
-<div class="box">
-  <h2>🤖 MASTER CORE v22.0 — MOBILE REMOTE</h2>
-  <div style="display:flex; gap:6px;">
-    <input type="password" id="pin" placeholder="Access PIN (default 1234)" value="1234" style="width:45%;">
-    <select id="voiceLang" style="width:55%;">
-      <option value="en-IN">🎙️ Voice: English / Hinglish</option>
-      <option value="bn-IN">🎙️ Voice: Bengali (বাংলা)</option>
-    </select>
+<main>
+<header>
+  <div>
+    <div class="brand">MASTER CORE</div>
+    <div class="sub">Mobile Command Workspace</div>
   </div>
-</div>
+  <div id="status" class="status">IDLE</div>
+</header>
 
-<div class="box">
-  <div id="output">╭─[ROHAN] ⚡ [MOBILE BRIDGE ONLINE]\n╰─➤ Tap the Microphone or type a command below...</div>
-</div>
-
-<div class="box">
-  <input type="text" id="cmd" placeholder="Speak or type command / question...">
-  <button class="voice-btn" onclick="startVoice()">🎤 TAP & SPEAK COMMAND</button>
-  <button class="send-btn" onclick="sendCmd('chat')">⚡ EXECUTE ON AGENT</button>
-  <div class="btn-grid">
-    <button onclick="sendCmd('audit')">🔍 System Audit</button>
-    <button onclick="sendCmd('scan')">📁 Scan Files</button>
-    <button onclick="sendCmd('stage_upgrade')">🛠️ Stage Code Upgrade</button>
-    <button onclick="sendCmd('approve_upgrade')">✅ Approve Upgrade</button>
-    <button onclick="sendCmd('rollback')">⏪ Rollback Code</button>
-    <button onclick="sendCmd('ps')">💻 Run PowerShell</button>
+<section class="panel">
+  <h1>Command Workspace</h1>
+  <div class="muted">Write your task, review it, then explicitly approve execution.</div>
+  <textarea id="cmd" spellcheck="false"
+    placeholder="Describe what you want MASTER CORE to do..."></textarea>
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <span class="muted" id="count">0 characters</span>
+    <button type="button" id="voice">🎙 Voice input</button>
   </div>
-</div>
+  <input id="pin" type="password" autocomplete="current-password"
+    placeholder="Access PIN">
+  <div class="row">
+    <button class="primary" id="reviewButton" type="button">Review task</button>
+    <button type="button" id="clearButton">Clear editor</button>
+  </div>
+  <div class="muted" id="message" aria-live="polite"></div>
+</section>
+
+<section class="panel" id="review">
+  <h2>Review before execution</h2>
+  <div class="muted">Read the complete task below. Nothing has been executed yet.</div>
+  <div class="review-text" id="reviewText"></div>
+  <div class="row">
+    <button type="button" id="backButton">Back to edit</button>
+    <button type="button" class="primary" id="approveButton">Approve &amp; Execute</button>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Agent response</h2>
+  <div class="muted" id="outputHint">Responses will appear here.</div>
+  <div id="output" aria-live="polite"></div>
+</section>
+
+<section class="panel">
+  <details>
+    <summary>Additional tools</summary>
+    <div class="muted" style="margin-top:10px">
+      Utility actions require a separate confirmation.
+    </div>
+    <div class="tools">
+      <button data-mode="audit">System audit</button>
+      <button data-mode="scan">Scan files</button>
+      <button data-mode="stage_upgrade">Stage upgrade</button>
+      <button data-mode="approve_upgrade">Approve upgrade</button>
+      <button data-mode="rollback" class="danger">Rollback</button>
+      <button data-mode="ps">Safe PowerShell</button>
+    </div>
+  </details>
+</section>
+</main>
 
 <script>
-function startVoice() {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert("Use Chrome on Android for Voice Input or use your keyboard microphone."); return; }
-  const rec = new SR();
-  rec.lang = document.getElementById('voiceLang').value;
-  rec.onresult = (e) => {
-    document.getElementById('cmd').value = e.results[0][0].transcript;
-  };
-  rec.start();
-}
+(() => {
+  const $ = id => document.getElementById(id);
+  const cmd = $("cmd");
+  let busy = false;
 
-async function sendCmd(mode) {
-  const cmdInput = document.getElementById('cmd');
-  const pin = document.getElementById('pin').value;
-  const out = document.getElementById('output');
-  const text = cmdInput.value.trim();
-  out.textContent = "⏳ Executing on Office PC Master Core...";
-  const res = await fetch('/api', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({pin, mode, text})
+  function setStatus(value) {
+    $("status").textContent = value.toUpperCase();
+    $("status").className = "status " + value;
+  }
+
+  function updateCount() {
+    $("count").textContent = cmd.value.length.toLocaleString() + " characters";
+  }
+
+  function showMessage(value) {
+    $("message").textContent = value;
+  }
+
+  function renderResponse(raw) {
+    const root = $("output");
+    root.replaceChildren();
+    const source = String(raw ?? "");
+    const lines = source.split(/\r?\n/);
+    let paragraph = [];
+    let list = null;
+    let code = null;
+    let codeLines = [];
+
+    function flushParagraph() {
+      if (!paragraph.length) return;
+      const p = document.createElement("p");
+      p.textContent = paragraph.join(" ");
+      root.appendChild(p);
+      paragraph = [];
+    }
+    function flushList() {
+      if (list) root.appendChild(list);
+      list = null;
+    }
+    function flushCode() {
+      const pre = document.createElement("pre");
+      const el = document.createElement("code");
+      el.textContent = codeLines.join("\n");
+      pre.appendChild(el);
+      root.appendChild(pre);
+      codeLines = [];
+    }
+
+    for (const line of lines) {
+      if (line.trim().startsWith("```")) {
+        flushParagraph();
+        flushList();
+        if (code) {
+          flushCode();
+          code = null;
+        } else {
+          code = true;
+        }
+        continue;
+      }
+      if (code) {
+        codeLines.push(line);
+        continue;
+      }
+      const heading = line.match(/^(#{1,3})\s+(.+)$/);
+      if (heading) {
+        flushParagraph();
+        flushList();
+        const h = document.createElement("h" + heading[1].length);
+        h.textContent = heading[2];
+        root.appendChild(h);
+      } else if (/^\s*[-*]\s+/.test(line)) {
+        flushParagraph();
+        if (!list) list = document.createElement("ul");
+        const li = document.createElement("li");
+        li.textContent = line.replace(/^\s*[-*]\s+/, "");
+        list.appendChild(li);
+      } else if (!line.trim()) {
+        flushParagraph();
+        flushList();
+      } else {
+        flushList();
+        paragraph.push(line);
+      }
+    }
+    if (code) flushCode();
+    flushParagraph();
+    flushList();
+    $("outputHint").textContent = source ? "Latest agent response" : "No response text.";
+  }
+
+  async function post(mode, approved, confirmed) {
+    if (busy) return;
+    const pin = $("pin").value;
+    const text = cmd.value;
+
+    if (!pin) {
+      showMessage("Enter your Access PIN first.");
+      return;
+    }
+    if ((mode === "chat" || mode === "stage_upgrade" || mode === "ps") &&
+        !text.trim()) {
+      showMessage("Enter a task or command first.");
+      return;
+    }
+
+    busy = true;
+    $("approveButton").disabled = true;
+    $("reviewButton").disabled = true;
+    setStatus("running");
+    showMessage("MASTER CORE is processing your request...");
+
+    try {
+      const response = await fetch("/api", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          pin, mode, text,
+          approved: approved === true,
+          confirmed: confirmed === true
+        })
+      });
+      const data = await response.json();
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.error || data.reply || ("HTTP " + response.status));
+      }
+      renderResponse(data.reply);
+      setStatus("completed");
+      showMessage("Request completed.");
+      if (mode === "chat") $("review").style.display = "none";
+    } catch (error) {
+      setStatus("error");
+      showMessage(error.message || "Request failed.");
+      renderResponse("ERROR: " + (error.message || "Request failed."));
+    } finally {
+      busy = false;
+      $("approveButton").disabled = false;
+      $("reviewButton").disabled = false;
+    }
+  }
+
+  cmd.addEventListener("input", updateCount);
+  $("clearButton").addEventListener("click", () => {
+    if (busy) return;
+    cmd.value = "";
+    updateCount();
+    $("review").style.display = "none";
+    showMessage("Editor cleared.");
+    cmd.focus();
   });
-  const data = await res.json();
-  out.textContent = data.reply;
-}
+
+  $("reviewButton").addEventListener("click", () => {
+    if (busy) return;
+    if (!cmd.value.trim()) {
+      showMessage("Write a task before reviewing.");
+      return;
+    }
+    $("reviewText").textContent = cmd.value;
+    $("review").style.display = "block";
+    setStatus("reviewing");
+    showMessage("Review the full task. Execution has not started.");
+    $("review").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  $("backButton").addEventListener("click", () => {
+    $("review").style.display = "none";
+    setStatus("idle");
+    cmd.focus();
+  });
+
+  $("approveButton").addEventListener("click", () => {
+    if (!confirm("You are approving this task for execution. Continue?")) return;
+    post("chat", true, false);
+  });
+
+  document.querySelectorAll("[data-mode]").forEach(button => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.mode;
+      const labels = {
+        audit:"Run system audit?",
+        scan:"Scan project files?",
+        stage_upgrade:"Stage an upgrade using the editor content?",
+        approve_upgrade:"Approve the pending upgrade?",
+        rollback:"Run rollback?",
+        ps:"Run the safe PowerShell command in the editor?"
+      };
+      if (!confirm(labels[mode] + "\n\nContinue only if you understand this action.")) return;
+      post(mode, false, true);
+    });
+  });
+
+  $("voice").addEventListener("click", () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      showMessage("Voice recognition is not supported by this browser.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.onresult = event => {
+      const spoken = event.results[0][0].transcript;
+      cmd.value += (cmd.value ? "\n" : "") + spoken;
+      updateCount();
+      showMessage("Voice text added to the editor. Review it before execution.");
+    };
+    recognition.onerror = event => showMessage("Voice input: " + event.error);
+    recognition.start();
+    showMessage("Listening... Your speech will only fill the editor.");
+  });
+
+  cmd.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      const start = cmd.selectionStart;
+      const end = cmd.selectionEnd;
+      cmd.setRangeText("\n", start, end, "end");
+      updateCount();
+    }
+  });
+
+  updateCount();
+})();
 </script>
 </body>
 </html>
 """
+
 
 class MobileWebHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -272,32 +646,105 @@ class MobileWebHandler(BaseHTTPRequestHandler):
         self.wfile.write(MOBILE_HTML.encode("utf-8"))
 
     def do_POST(self):
-        length = int(self.headers.get("Content-Length", 0))
-        body = json.loads(self.rfile.read(length).decode("utf-8"))
-        if body.get("pin") != controller.config.get("access_pin", "1234"):
-            reply = "❌ Invalid Access PIN."
-        else:
-            mode = body.get("mode", "chat")
-            text = body.get("text", "").strip()
-            if mode == "audit":
-                reply = controller.run_system_audit()
-            elif mode == "scan":
-                reply = controller.run_agent_command("scan files")
-            elif mode == "stage_upgrade":
-                reply = controller.stage_code_upgrade(text or "Add a system health helper function")
-            elif mode == "approve_upgrade":
-                reply = controller.approve_pending_upgrade()
-            elif mode == "rollback":
-                reply = controller.rollback_last_upgrade()
-            elif mode == "ps":
-                reply = controller.run_safe_powershell(text or "Get-ChildItem")
-            else:
-                reply = controller.run_agent_command(text or "check memory")
+        import json
 
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps({"reply": reply}).encode("utf-8"))
+        def send_json(status, payload):
+            data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+
+        try:
+            raw_length = self.headers.get("Content-Length", "0")
+            try:
+                length = int(raw_length)
+            except (TypeError, ValueError):
+                return send_json(400, {"ok": False, "error": "Invalid Content-Length."})
+
+            if length < 0:
+                return send_json(400, {"ok": False, "error": "Invalid request length."})
+            if length > 2 * 1024 * 1024:
+                return send_json(413, {"ok": False, "error": "Request is too large."})
+
+            raw_body = self.rfile.read(length)
+            if len(raw_body) != length:
+                return send_json(400, {"ok": False, "error": "Incomplete request body."})
+
+            try:
+                body = json.loads(raw_body.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                return send_json(400, {"ok": False, "error": "Invalid JSON or UTF-8 request."})
+
+            if not isinstance(body, dict):
+                return send_json(400, {"ok": False, "error": "Request must be a JSON object."})
+
+            expected_pin = str(controller.config.get("access_pin", "1234"))
+            supplied_pin = body.get("pin")
+            if not isinstance(supplied_pin, str) or supplied_pin != expected_pin:
+                return send_json(403, {"ok": False, "error": "Invalid Access PIN."})
+
+            mode = body.get("mode", "chat")
+            if not isinstance(mode, str):
+                return send_json(400, {"ok": False, "error": "Invalid mode."})
+
+            allowed_modes = {
+                "chat", "audit", "scan", "stage_upgrade",
+                "approve_upgrade", "rollback", "ps"
+            }
+            if mode not in allowed_modes:
+                return send_json(400, {"ok": False, "error": "Unsupported mode."})
+
+            text = body.get("text", "")
+            if not isinstance(text, str):
+                return send_json(400, {"ok": False, "error": "Prompt must be text."})
+
+            if len(text.encode("utf-8")) > 1024 * 1024:
+                return send_json(413, {"ok": False, "error": "Prompt exceeds the 1 MiB limit."})
+
+            if mode == "chat":
+                if body.get("approved") is not True:
+                    return send_json(403, {
+                        "ok": False,
+                        "error": "Execution blocked. Review the prompt and explicitly approve it first."
+                    })
+                if not text.strip():
+                    return send_json(400, {"ok": False, "error": "Prompt is empty."})
+                reply = controller.run_agent_command(text)
+
+            else:
+                if body.get("confirmed") is not True:
+                    return send_json(403, {
+                        "ok": False,
+                        "error": "Utility action requires explicit confirmation."
+                    })
+
+                if mode == "audit":
+                    reply = controller.run_system_audit()
+                elif mode == "scan":
+                    reply = controller.run_agent_command("scan files")
+                elif mode == "stage_upgrade":
+                    reply = controller.stage_code_upgrade(
+                        text if text.strip() else "Add a system health helper function"
+                    )
+                elif mode == "approve_upgrade":
+                    reply = controller.approve_pending_upgrade()
+                elif mode == "rollback":
+                    reply = controller.rollback_last_upgrade()
+                elif mode == "ps":
+                    reply = controller.run_safe_powershell(
+                        text if text.strip() else "Get-ChildItem"
+                    )
+
+            return send_json(200, {"ok": True, "reply": str(reply)})
+
+        except Exception as exc:
+            return send_json(500, {
+                "ok": False,
+                "error": "Server error: " + str(exc)
+            })
 
 def telegram_polling_loop():
     token = controller.config.get("telegram_bot_token", "").strip()

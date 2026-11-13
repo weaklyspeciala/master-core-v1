@@ -1,4 +1,4 @@
-﻿import json
+import json
 import ast
 import re
 import os
@@ -106,78 +106,252 @@ class SelfDevelopmentController:
         return search_results
 
     def plan_task(self, objective: str, web_context: str) -> str:
-        prompt = f"Context from Web:\n{web_context}\n\nTask: {objective}\nPlan a Python script based on this context. 3 bullet points."
+        prompt = f"Context from Web:\n{web_context}\n\nTask: {objective}\nCreate a concise task plan in 3 bullet points. Do not generate code."
         return self._call_ollama_pro([{"role": "user", "content": prompt}], "✨ Planning Architecture...", "✨ Plan Ready")
 
     def generate_code_changes(self, objective: str, plan: str, error_feedback: str = "") -> dict:
-        repair_note = f"\n⚠️ PREVIOUS CODE FAILED:\n{error_feedback}\nFIX THE ERROR AND REWRITE. Ensure all quotes are closed." if error_feedback else ""
+        repair_note = f"\nPREVIOUS CODE FAILED.\n{error_feedback}\nReturn the COMPLETE corrected Python source in the JSON code value. Do not repeat the previous error." if error_feedback else ""
         prompt = (
             f"Objective: {objective}\nPlan: {plan}\n{repair_note}\n\n"
-            f"Return ONLY valid JSON format with keys \"file_path\" and \"code\".\n"
-            f"Example:\n{{\"file_path\": \"MASTER_CORE_V1/staging/anim.py\", \"code\": \"print('hi')\"}}"
+            f"IMPORTANT: The value of \"code\" MUST be complete, syntactically valid Python source code. "
+            f"If the objective asks for a comment, begin the Python comment with #. "
+            f"Never put plain un-commented natural language in the code value.\n"
+            f"Return ONLY valid JSON with exactly the keys \"file_path\" and \"code\".\n"
+            f"Example: {{\"file_path\": \"staging/example.py\", \"code\": \"# Example comment\\nprint('hi')\"}}"
         )
+
         label = "🔧 Self-Healing & Debugging Code..." if error_feedback else "💻 Writing Code..."
         done_lbl = "🔧 Bug Fixed & Code Generated" if error_feedback else "💻 Code Generated"
-        response = self._call_ollama_pro([{"role": "user", "content": prompt}], label, done_lbl)
+        response = self._call_ollama_pro(
+            [{"role": "user", "content": prompt}], label, done_lbl
+        )
 
-        cleaned = re.sub(r"^```(?:json)?\s*", "", response.strip(), flags=re.IGNORECASE)
-        cleaned = re.sub(r"\s*```$", "", cleaned.strip())
-        match = re.search(r"\{.*\}", cleaned, re.DOTALL)
-        candidate = match.group(0) if match else cleaned
+        if not isinstance(response, str):
+            return {"error": "Invalid output format.", "raw": response}
 
-        try: 
-            parsed = json.loads(candidate)
-            if "file_path" in parsed: return parsed
-        except: pass
-        
-        path_match = re.search(r'["\']file_path["\']\s*:\s*["\']([^"\']+)["\']', response)
-        code_block = re.search(r"```(?:python)?\s*(.*?)```", response, re.DOTALL)
-        if code_block and path_match:
-            return {"file_path": path_match.group(1), "code": code_block.group(1).strip()}
-        return {"error": "Invalid output format.", "raw": response}
+        cleaned = response.strip()
+        decoder = json.JSONDecoder()
+        valid_payloads = []
 
-    def execute_development_task(self, objective: str) -> dict:
-        print(f"\n{UI.GRAY}{'━' * 75}{UI.RESET}", flush=True)
-        UI.step("🎯", f"{UI.BOLD}Mission:{UI.RESET} {objective}", UI.CYAN)
-        
-        web_context = ""
-        if "search" in objective.lower() or "research" in objective.lower() or "internet" in objective.lower():
-            web_context = self.autonomous_research(objective)
-            
-        plan = self.plan_task(objective, web_context)
-        error_feedback = ""
-        
-        for attempt in range(1, self.max_iterations + 1):
-            gen_data = self.generate_code_changes(objective, plan, error_feedback)
-            if "error" in gen_data:
-                error_feedback = gen_data["error"]
-                if attempt == self.max_iterations: return {"status": "error", "message": error_feedback}
-                UI.step("🔄", f"Format error. Deep Healing (Attempt {attempt+1})...", UI.YELLOW)
+        for index, character in enumerate(cleaned):
+            if character != "{":
                 continue
-
-            target_path = gen_data.get("file_path", "").replace("\\", "/")
-            code_content = gen_data.get("code", "").strip()
-            
-            # EMPTY CODE CATCHER (The new fix!)
-            if not code_content:
-                error_feedback = "You returned an empty string for the code! You MUST write the actual Python code inside the 'code' JSON key."
-                UI.step("✖", f"AI returned a blank file! Triggering AI Auto-Fix (Attempt {attempt+1})...", UI.RED)
-                continue
-
-            UI.box(f"📄 Proposed Module: {target_path} (Attempt {attempt})", code_content, UI.CYAN, numbered=True)
 
             try:
-                ast.parse(code_content)
-                UI.step("✔", "Syntax Verification: PASSED", UI.GREEN)
-                break
-            except SyntaxError as e:
-                error_feedback = f"SyntaxError: {str(e)}"
-                UI.step("✖", f"Syntax Error Found: {e}. Triggering AI Auto-Fix...", UI.RED)
-                if attempt == self.max_iterations: return {"status": "error", "message": error_feedback}
+                parsed, _ = decoder.raw_decode(cleaned[index:])
+            except (json.JSONDecodeError, ValueError):
+                continue
 
-        UI.step("🛡️", "Submitting to Workstation Safety Adapter...", UI.YELLOW)
-        result = self.callbacks["tool_write"]({"path": target_path, "content": code_content}, self.project_root)
-        
-        if isinstance(result, dict) and result.get("status") == "pending_approval":
-            UI.box("🛡️ SAFETY GATE: APPROVAL REQUIRED", f"Ticket ID: {result.get('ticket_id')}\nPath: {result.get('path')}\nReview: http://127.0.0.1:8765/safety", UI.YELLOW)
-        return result
+            if not isinstance(parsed, dict):
+                continue
+
+            if set(parsed.keys()) != {"file_path", "code"}:
+                continue
+
+            file_path = parsed.get("file_path")
+            code = parsed.get("code")
+
+            if (
+                isinstance(file_path, str)
+                and file_path.strip()
+                and isinstance(code, str)
+                and code.strip()
+            ):
+                valid_payloads.append({
+                    "file_path": file_path.strip(),
+                    "code": code
+                })
+
+        if len(valid_payloads) == 1:
+            return valid_payloads[0]
+
+        if len(valid_payloads) == 0:
+            import re
+
+            path_matches = re.findall(
+                r'["\']file_path["\']\s*:\s*["\']([^"\']+)["\']',
+                response
+            )
+
+            code_blocks = re.findall(
+                r'```(?:python)?[ \t]*\r?\n(.*?)```',
+                response,
+                flags=re.IGNORECASE | re.DOTALL
+            )
+
+            if len(path_matches) == 1 and len(code_blocks) == 1:
+                file_path = path_matches[0].strip()
+                code = code_blocks[0]
+
+                if file_path and code.strip():
+                    return {"file_path": file_path, "code": code}
+
+        return {"error": "Invalid output format.", "raw": response}
+
+    def _run_quality_gate(self) -> bool:
+        """Run the existing static Quality Gate before approval submission."""
+        import subprocess
+
+        root = self.project_root.resolve()
+        gate_path = root / "staging" / "autonomous_quality_gate.py"
+
+        if not gate_path.is_file():
+            UI.step("✖", "Quality Gate missing. Approval blocked.", UI.RED)
+            return False
+
+        if gate_path.resolve().parents[1] != root:
+            UI.step("✖", "Quality Gate root mismatch. Approval blocked.", UI.RED)
+            return False
+
+        UI.step("🧪", "Running Autonomous Quality Gate...", UI.CYAN)
+
+        try:
+            result = subprocess.run(
+                [sys.executable, str(gate_path)],
+                cwd=str(root),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180,
+                check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            UI.step("✖", f"Quality Gate execution failed: {exc}", UI.RED)
+            return False
+
+        output = (result.stdout or "") + (result.stderr or "")
+        if output.strip():
+            print(output.rstrip(), flush=True)
+
+        if result.returncode != 0:
+            UI.step("⛔", "QUALITY GATE FAILED. Approval blocked.", UI.RED)
+            return False
+
+        UI.step("✔", "QUALITY GATE PASSED.", UI.GREEN)
+        return True
+
+    def execute_development_task(self, objective: str) -> dict:
+        """Execute a bounded development task; planning requests never generate code."""
+        self.operation_count = 0
+
+        print(f"\\n{UI.GRAY}{'━' * 75}{UI.RESET}", flush=True)
+        UI.step("🎯", f"{UI.BOLD}Mission:{UI.RESET} {objective}", UI.CYAN)
+
+        value = objective.strip().lower()
+
+        execution_markers = (
+            "develop:", "self-upgrade:", "upgrade:",
+            "implement the plan", "implement:", "write code",
+            "create the file", "modify files", "make changes",
+            "apply changes", "fix the code",
+            "ইমপ্লিমেন্ট কর", "কোড লিখ", "ফাইল তৈরি কর",
+            "পরিবর্তন কর", "ঠিক কর"
+        )
+
+        plan_markers = (
+            "plan", "roadmap", "পরিকল্পনা", "কর্মপরিকল্পনা"
+        )
+
+        request_markers = (
+            "prepare", "create", "give", "show", "report",
+            "analyze", "প্রস্তুত", "তৈরি", "দাও", "দেখাও"
+        )
+
+        explicit_execution = any(
+            marker in value for marker in execution_markers
+        )
+
+        planning_only = (
+            not explicit_execution
+            and any(marker in value for marker in plan_markers)
+            and any(marker in value for marker in request_markers)
+        )
+
+        web_context = ""
+        if any(word in value for word in ("search", "research", "internet")):
+            web_context = self.autonomous_research(objective)
+
+        plan = self.plan_task(objective, web_context)
+
+        if planning_only:
+            UI.box("📋 DEVELOPMENT PLAN", plan, UI.BLUE)
+            UI.step(
+                "✔",
+                "Planning complete. No code generated and no approval ticket created.",
+                UI.GREEN
+            )
+            return {
+                "status": "planned",
+                "plan": plan,
+                "message": "Planning-only request completed; project files unchanged."
+            }
+
+        feedback = ""
+        retry_limit = min(max(1, self.max_iterations), 2)
+
+        for attempt in range(1, retry_limit + 1):
+            data = self.generate_code_changes(objective, plan, feedback)
+
+            if not isinstance(data, dict) or "error" in data:
+                feedback = (
+                    str(data.get("error", "Invalid generator response."))
+                    if isinstance(data, dict)
+                    else "Generator returned an invalid response."
+                )
+                if attempt == retry_limit:
+                    return {"status": "error", "message": feedback}
+                continue
+
+            path = str(data.get("file_path", "")).replace("\\", "/").strip()
+            code = str(data.get("code", "")).strip()
+
+            if not path or not code:
+                feedback = "Return non-empty file_path and complete code."
+                if attempt == retry_limit:
+                    return {"status": "error", "message": feedback}
+                continue
+
+            try:
+                ast.parse(code)
+            except SyntaxError as exc:
+                feedback = (
+                    f"SyntaxError: {exc}. "
+                    "Return the complete corrected source."
+                )
+                if attempt == retry_limit:
+                    return {"status": "error", "message": feedback}
+                continue
+
+            if not self._run_quality_gate():
+                return {
+                    "status": "blocked",
+                    "message": "Pre-change Quality Gate failed; no file changed."
+                }
+
+            result = self.callbacks["tool_write"](
+                {"path": path, "content": code},
+                self.project_root
+            )
+
+            if isinstance(result, dict) and result.get("status") == "rolled_back":
+                feedback = (
+                    "The previous change failed post-change checks and was "
+                    "rolled back. Fix the cause. Test details: "
+                    + str(result.get("post_change_checks", ""))
+                )
+                if attempt < retry_limit:
+                    UI.step(
+                        "🔄",
+                        f"Verified rollback. Final repair attempt {attempt + 1}/{retry_limit}.",
+                        UI.YELLOW
+                    )
+                    continue
+
+            return result
+
+        return {
+            "status": "error",
+            "message": "Bounded development retry limit reached."
+        }
+
